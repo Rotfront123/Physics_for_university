@@ -112,13 +112,18 @@ def plot_angle_comparison():
     
     plt.tight_layout()
     plt.show()
-   
+    print("\nРезультаты для квадратичного сопротивления:")
+    for angle in angles:
+        x, y, t, fall_point = simulate_trajectory('quadratic', v0, angle, k_quadratic)
+        range_theor, height_theor, time_theor = theoretical_for_linear(v0, angle, 0)
+        print(f"Угол {angle}°: дальность = {fall_point:.1f} м (теор. без сопр. {range_theor:.1f} м), "
+              f"высота = {max(y):.1f} м (теор. без сопр.{height_theor:.1f} м)")
     print("\nРезультаты для линейного сопротивления:")
     for angle in angles:
         x, y, t, fall_point = simulate_trajectory('linear', v0, angle, k_linear)
         range_theor, height_theor, time_theor = theoretical_for_linear(v0, angle, k_linear)
-        print(f"Угол {angle}°: дальность = {fall_point:.1f} м (теор. {range_theor:.1f} м), "
-              f"высота = {max(y):.1f} м (теор. {height_theor:.1f} м)")
+        print(f"Угол {angle}°: дальность = {fall_point:.1f} м (теор. линейное сопр. {range_theor:.1f} м), "
+              f"высота = {max(y):.1f} м (теор. линейное сопр. {height_theor:.1f} м)")
 
 def plot_velocity_comparison():
     """Режим 1: Влияние скорости на бросок"""
@@ -179,6 +184,13 @@ def plot_velocity_comparison():
         range_theor, height_theor, time_theor = theoretical_for_linear(v0, angle, 0)  # Теория без сопротивления
         print(f"Скорость {v0} м/с: дальность = {fall_point:.1f} м (теор. без сопр. {range_theor:.1f} м), "
               f"высота = {max(y):.1f} м (теор. без сопр. {height_theor:.1f} м)")
+    print("\nРезультаты для линейного сопротивления:")
+    for v0 in velocities:
+        x, y, t, fall_point = simulate_trajectory('linear', v0, angle, k_linear)
+        range_theor, height_theor, time_theor = theoretical_for_linear(v0, angle, k_linear)
+        print(f"Скорость {v0} м/с: дальность = {fall_point:.1f} м (теор. линейное сопротивление {range_theor:.1f} м), "
+              f"высота = {max(y):.1f} м (теор. линейное сопротивление {height_theor:.1f} м)")
+    
 
 def personal_simulation():
     """Режим 2: Персональное моделирование"""
